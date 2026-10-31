@@ -20,6 +20,7 @@
             display: inline-block;
             position: relative;
             z-index: 10;
+            max-width: 90%;
         }
         button {
             background-color: #ff4d6d;
@@ -45,11 +46,17 @@
             font-weight: bold;
             animation: pop 0.5s ease-out;
         }
+        .surprise-image {
+            width: 100%;
+            max-width: 350px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
         @keyframes pop {
             0% { transform: scale(0); }
             100% { transform: scale(1); }
         }
-
         /* Heart Floating Animation CSS */
         .heart {
             position: fixed;
@@ -61,14 +68,8 @@
             animation: floatUp 4s linear forwards;
         }
         @keyframes floatUp {
-            0% {
-                transform: translateY(0) translateX(0) scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-105vh) translateX(var(--randomX)) scale(1.5);
-                opacity: 0;
-            }
+            0% { transform: translateY(0) translateX(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-105vh) translateX(var(--randomX)) scale(1.5); opacity: 0; }
         }
     </style>
 </head>
@@ -77,24 +78,25 @@
     <div class="container">
         <h2>Huy! May mensahe ako para sayo... 👇</h2>
         <br>
-        <!-- Kapag kinlik, gagana ang mensahe, kanta, at mga puso -->
+        <!-- Kapag kinlik, gagana ang mensahe, larawan, kanta, at mga puso -->
         <button id="btn" onclick="startSurprise()">Pindutin Mo Dito</button>
-
+        
         <div id="surprise">
+            <!-- Dito lalabas ang picture mo -->
+            <img src="https://unsplash.com" alt="Surprise Image" class="surprise-image"><br>
             💖 Salamat sa pagiging mabuting miga! <br>
             ✨ imaw ta karun pungko sa linya namun! ✨
         </div>
     </div>
 
     <!-- Audio Element para sa Background Music -->
-    <!-- Pwede mong palitan ang URL sa 'src' ng kahit anong direktang link ng .mp3 music na gusto mo -->
     <audio id="bg-music" loop>
         <source src="https://soundhelix.com" type="audio/mpeg">
     </audio>
 
     <script>
         function startSurprise() {
-            // 1. Ipakita ang text message
+            // 1. Ipakita ang text message at picture
             document.getElementById('surprise').style.display = 'block';
             
             // 2. Patugtugin ang background music
@@ -102,10 +104,10 @@
             music.play().catch(function(error) {
                 console.log("Audio play prevented: ", error);
             });
-
+            
             // 3. Itago ang main button para hindi paulit-ulit pindutin
             document.getElementById('btn').style.display = 'none';
-
+            
             // 4. Simulan ang walang tigil na paglabas ng lumilipad na puso
             setInterval(createHeart, 300);
         }
@@ -124,15 +126,14 @@
             
             // Random na bilis ng pag-akyat (bawat puso iba ang bilis)
             heart.style.animationDuration = Math.random() * 2 + 3 + 's'; // 3s hanggang 5s
-
+            
             document.body.appendChild(heart);
-
-            // Tanggalin ang puso sa HTML kapag tapos na ang animation para hindi bumagal ang phone/PC
+            
+            // Tanggalin ang puso sa HTML kapag tapos na ang animation
             setTimeout(() => {
                 heart.remove();
             }, 5000);
         }
     </script>
-
 </body>
 </html>
